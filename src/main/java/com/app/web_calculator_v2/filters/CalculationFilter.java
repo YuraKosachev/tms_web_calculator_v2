@@ -1,6 +1,5 @@
 package com.app.web_calculator_v2.filters;
 
-import com.app.web_calculator_v2.models.ValidationResult;
 import com.app.web_calculator_v2.models.ValidatorResult;
 import com.app.web_calculator_v2.services.ValidationService;
 import com.app.web_calculator_v2.validators.EmptyStringValidator;
@@ -19,7 +18,6 @@ public class CalculationFilter extends HttpFilter {
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
 
-        String method = req.getMethod();
         if(!req.getMethod().equalsIgnoreCase("POST")){
             chain.doFilter(req, res);
             return;
@@ -36,8 +34,7 @@ public class CalculationFilter extends HttpFilter {
         {
             req.setAttribute("validation_errors", validationResult.getErrors());
             getServletContext().getRequestDispatcher("/calculation.jsp").forward(req, res);
-            return;
         }
-        super.doFilter(req, res, chain);
+        chain.doFilter(req, res);
     }
 }
