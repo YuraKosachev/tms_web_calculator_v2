@@ -34,6 +34,7 @@ public class CalculationFilter extends HttpFilter {
         {
             req.setAttribute("validation_errors", validationResult.getErrors());
             getServletContext().getRequestDispatcher("/calculation.jsp").forward(req, res);
+            return;
         }
         chain.doFilter(req, res);
     }
